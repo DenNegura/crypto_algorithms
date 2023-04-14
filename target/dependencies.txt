@@ -1,0 +1,2 @@
+digraph "org.crypto:crypto_algorithms:jar:1.0-SNAPSHOT" { 
+ } 

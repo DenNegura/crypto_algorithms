@@ -1,6 +1,8 @@
 package org.crypto;
 
 import java.util.Random;
+import java.util.List;
+import java.util.ArrayList;
 
 public class CMath {
 
@@ -56,16 +58,6 @@ public class CMath {
         throw new Exception("Нет простого числа между [%d, %d]".formatted(from, to));
     }
 
-    public static long funEuler(long x) {
-        long count = 0;
-        for(int i = 1; i < x; i++) {
-            if(isCoprime(i, x)) {
-                count++;
-            }
-        }
-        return count;
-    }
-
     public static boolean isCoprime(long a, long b) {
         long num = Math.min(a, b);
         for(int i = 2; i <= num; i++) {
@@ -76,8 +68,45 @@ public class CMath {
         return true;
     }
 
-    public static long primitiveRoot(long x) {
-        return 0;
+    public static boolean comparToModulo(long a, long b, long mod) {
+        long modA = (a % mod + mod) % mod;
+        long modB = (b % mod + mod) % mod;
+        return modA == modB;
+    }
+
+    public static long firstPrimitiveRoot(long x) {
+        if (!isPrime(x)) {
+            return -1;
+        }
+        long phi = x - 1;
+        List<Long> factors = factorize(phi);
+        for (long g = 2; g <= x; g++) {
+            boolean isPrimitiveRoot = true;
+            for (long factor : factors) {
+                if (modulo(g, (long) (phi / factor), x) == 1) {
+                    isPrimitiveRoot = false;
+                    break;
+                }
+            }
+            if (isPrimitiveRoot) {
+                return g;
+            }
+        }
+        return -1;
+    }
+
+    public static List<Long> factorize(long n) {
+        List<Long> factors = new ArrayList<>();
+        for (long i = 2; i <= n / i; i++) {
+            while (n % i == 0) {
+                factors.add(i);
+                n /= i;
+            }
+        }
+        if (n > 1) {
+            factors.add(n);
+        }
+        return factors;
     }
 
     public static long randomRange(long from, long to) {

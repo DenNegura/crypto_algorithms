@@ -1,5 +1,6 @@
 package org.crypto;
 
+import javax.swing.*;
 import java.util.Date;
 
 public class RC4 {
@@ -17,7 +18,7 @@ public class RC4 {
     private void init(byte[] key) {
         int keyLen = key.length;
 
-        for(int i = 0; i < 256; i++) {
+        for(int i = 0; i < 128; i++) {
             S[i] = (byte) i;
         }
 
@@ -35,8 +36,8 @@ public class RC4 {
     }
 
     private byte keyItem() {
-        x = (x + 1) % 356;
-        y = (y + S[x]) % 356;
+        x = (x + 1) % 256;
+        y = (y + S[x]) % 256;
 
         swap(S, x, y);
 

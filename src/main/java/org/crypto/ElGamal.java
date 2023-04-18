@@ -17,14 +17,18 @@ public class ElGamal {
         generateKeys(numFrom, numTo);
     }
 
-    private void generateKeys(int numFrom, int numTo) throws Exception {
+    public void generateKeys(int numFrom, int numTo) throws Exception {
         long p = CMath.randomPrime(numFrom, numTo);
         long g = CMath.firstPrimitiveRoot(p);
         long x = CMath.randomRange(1, p - 2);
         long y = CMath.modulo(g, x, p);
         openKey = List.of(p, g, y);
         privateKey = x;
-    } 
+    }
+
+    public void coding(long message, List<Long> openKey) {
+
+    }
 
     public List<Long> getOpenKey() {
         return openKey;

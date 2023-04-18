@@ -68,7 +68,7 @@ public class CMath {
         return true;
     }
 
-    public static boolean comparToModulo(long a, long b, long mod) {
+    public static boolean compareToModulo(long a, long b, long mod) {
         long modA = (a % mod + mod) % mod;
         long modB = (b % mod + mod) % mod;
         return modA == modB;

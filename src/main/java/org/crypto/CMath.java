@@ -1,10 +1,19 @@
 package org.crypto;
 
+import java.math.BigInteger;
 import java.util.Random;
 import java.util.List;
 import java.util.ArrayList;
 
 public class CMath {
+
+    public static BigInteger toBigInt(int num) {
+        return BigInteger.valueOf(num);
+    }
+
+    public static BigInteger toBigInt(long num) {
+        return BigInteger.valueOf(num);
+    }
 
     public static boolean isPrime(long x) {
         long num = (long) Math.sqrt(x);

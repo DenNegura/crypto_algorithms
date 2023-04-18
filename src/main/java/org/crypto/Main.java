@@ -4,11 +4,8 @@ import java.util.List;
 
 public class Main {
     public static void main(String[] args) throws Exception {
-       ElGamal elGamal = new ElGamal(1000, 10000);
-       System.out.println(elGamal.getOpenKey());
-        List<Long> codingMessage = elGamal.coding(1446);
-        System.out.println(codingMessage);
-       System.out.println(elGamal.decoding(codingMessage));
+       ElGamal elGamal = new ElGamal(10, 1000);
+       System.out.println(elGamal.getReport());
 //        System.out.println(CMath.isPrime(2));
 //        System.out.println(CMath.randomPrime(1000, 100000));
 //        System.out.println(CMath.modulo(98765, 1024, 123557));

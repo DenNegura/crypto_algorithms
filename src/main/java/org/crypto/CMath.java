@@ -1,9 +1,9 @@
 package org.crypto;
 
 import java.math.BigInteger;
-import java.util.Random;
-import java.util.List;
 import java.util.ArrayList;
+import java.util.List;
+import java.util.Random;
 
 public class CMath {
 
@@ -17,16 +17,16 @@ public class CMath {
 
     public static boolean isPrime(long x) {
         long num = (long) Math.sqrt(x);
-        if(x == 1) {
+        if (x == 1) {
             return false;
         }
 
-        if(x == 2) {
+        if (x == 2) {
             return true;
         }
 
-        for(int i = 2; i <= num; i++) {
-            if(x % i == 0) {
+        for (int i = 2; i <= num; i++) {
+            if (x % i == 0) {
                 return false;
             }
         }
@@ -34,32 +34,31 @@ public class CMath {
     }
 
     public static long randomPrime(long from, long to) throws Exception {
-        if(from > to) {
+        if (from > to) {
             throw new Exception("Верхняя граница (%d) меньше нижней (%d)".formatted(to, from));
         }
         long randNum = randomRange(from, to);
         boolean isUp = randNum > to - from;
 
-        if(isUp) {
-            for(long i = randNum; i <= to; i++) {
-                if(isPrime(i)) {
-                   return i;
-                }
-            }
-            for(long i = randNum; i >= from; i--) {
-                if(isPrime(i)) {
+        if (isUp) {
+            for (long i = randNum; i <= to; i++) {
+                if (isPrime(i)) {
                     return i;
                 }
             }
-        }
-        else {
-            for(long i = randNum; i >= from; i--) {
-                if(isPrime(i)) {
+            for (long i = randNum; i >= from; i--) {
+                if (isPrime(i)) {
                     return i;
                 }
             }
-            for(long i = randNum; i <= to; i++) {
-                if(isPrime(i)) {
+        } else {
+            for (long i = randNum; i >= from; i--) {
+                if (isPrime(i)) {
+                    return i;
+                }
+            }
+            for (long i = randNum; i <= to; i++) {
+                if (isPrime(i)) {
                     return i;
                 }
             }
@@ -69,8 +68,8 @@ public class CMath {
 
     public static boolean isCoprime(long a, long b) {
         long num = Math.min(a, b);
-        for(int i = 2; i <= num; i++) {
-            if(a % i == 0 && b % i == 0) {
+        for (int i = 2; i <= num; i++) {
+            if (a % i == 0 && b % i == 0) {
                 return false;
             }
         }

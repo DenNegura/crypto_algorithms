@@ -91,7 +91,7 @@ public class CMath {
         for (long g = 2; g <= x; g++) {
             boolean isPrimitiveRoot = true;
             for (long factor : factors) {
-                if (modulo(g, (long) (phi / factor), x) == 1) {
+                if (modulo(g, phi / factor, x) == 1) {
                     isPrimitiveRoot = false;
                     break;
                 }
@@ -135,5 +135,26 @@ public class CMath {
             a = (a * a) % m;
         }
         return result;
+    }
+
+    public static BigInteger nextPrime(long i) {
+        i++;
+        while (!isPrime(i)) {
+            i++;
+        }
+        return BigInteger.valueOf(i);
+    }
+
+    public static Long modularMultiplicativeInverse(long number, long modulo) {
+        Long nextNumber = modulo / number;
+        while (true) {
+            nextNumber++;
+            if (nextNumber.equals(number)) {
+                continue;
+            }
+            if ((nextNumber * number) % modulo == 1) {
+                return nextNumber;
+            }
+        }
     }
 }

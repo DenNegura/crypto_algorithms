@@ -1,16 +1,17 @@
 package org.crypto;
 
+import java.util.Arrays;
 import java.util.List;
 
 public class Main {
     public static void main(String[] args) throws Exception {
-       ElGamal elGamal = new ElGamal(10, 1000);
-       System.out.println(elGamal.getReport());
-//        System.out.println(CMath.isPrime(2));
-//        System.out.println(CMath.randomPrime(1000, 100000));
-//        System.out.println(CMath.modulo(98765, 1024, 123557));
-        // System.out.println(CMath.funEuler(36));
-        // System.out.println(CMath.comparToModulo(26, 11, 5));
-        // System.out.println(CMath.firstPrimitiveRoot(23));
+        byte[] key = "key".getBytes();
+        RC4 rc4 = new RC4(key);
+        byte[] testB = "test".getBytes();
+        byte[] result = rc4.encode(testB, testB.length);
+
+        byte[] decryptedB = rc4.decode(result, result.length);
+
+        String decryptedStr = Arrays.toString(decryptedB);
     }
 }

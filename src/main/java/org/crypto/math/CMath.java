@@ -1,4 +1,4 @@
-package org.crypto;
+package org.crypto.math;
 
 import java.math.BigInteger;
 import java.util.ArrayList;
@@ -6,14 +6,6 @@ import java.util.List;
 import java.util.Random;
 
 public class CMath {
-
-    public static BigInteger toBigInt(int num) {
-        return BigInteger.valueOf(num);
-    }
-
-    public static BigInteger toBigInt(long num) {
-        return BigInteger.valueOf(num);
-    }
 
     public static boolean isPrime(long x) {
         long num = (long) Math.sqrt(x);

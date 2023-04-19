@@ -1,7 +1,8 @@
-package org.crypto;
+package org.crypto.elgamal;
+
+import org.crypto.math.CMath;
 
 import java.math.BigInteger;
-import java.sql.ResultSet;
 import java.util.List;
 
 
@@ -11,13 +12,13 @@ public class ElGamal {
 
     private Long privateKey;
 
-    private StringBuilder report;
+    private final StringBuilder report;
 
-    ElGamal() {
+    public ElGamal() {
         report = new StringBuilder("Схема Эль-Гамаля.\n");
     }
 
-    ElGamal(int numFrom, int numTo) throws Exception {
+    public ElGamal(int numFrom, int numTo) throws Exception {
         report = new StringBuilder("Схема Эль-Гамаля.\n");
         generateKeys(numFrom, numTo);
         long message = CMath.randomRange(numFrom, openKey.get(0));

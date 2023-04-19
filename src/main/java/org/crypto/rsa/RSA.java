@@ -57,8 +57,8 @@ public class RSA {
 
     private Map<String, List<BigInteger>> generateKeys(Integer minValueForGeneration, Integer maxValueForGeneration) throws Exception {
         Map<String, List<BigInteger>> result = new HashMap<>();
-        long p = randomPrime(maxValueForGeneration, minValueForGeneration);
-        long q = randomPrime(maxValueForGeneration, minValueForGeneration);
+        long p = randomPrime(minValueForGeneration, maxValueForGeneration);
+        long q = randomPrime(minValueForGeneration, maxValueForGeneration);
         BigInteger n = BigInteger.valueOf(p * q);
         BigInteger eulerFunction = BigInteger.valueOf((p - 1) * (q - 1));
         BigInteger openExponent = getOpenExponent(eulerFunction);

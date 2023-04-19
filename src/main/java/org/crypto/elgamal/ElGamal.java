@@ -14,14 +14,10 @@ public class ElGamal {
 
     private final StringBuilder report;
 
-    public ElGamal() {
-        report = new StringBuilder("Схема Эль-Гамаля.\n");
-    }
 
-    public ElGamal(int numFrom, int numTo) throws Exception {
+    public ElGamal(int message, int numFrom, int numTo) throws Exception {
         report = new StringBuilder("Схема Эль-Гамаля.\n");
         generateKeys(numFrom, numTo);
-        long message = CMath.randomRange(numFrom, openKey.get(0));
         List<Long> codingMessage = coding(message);
         decoding(codingMessage);
     }

@@ -25,8 +25,8 @@ public class RSA {
         Map<String, List<BigInteger>> keys = generateKeys(minValueForGeneration, maxValueForGeneration);
         this.publicKey = keys.get("public");
         this.privateKey = keys.get("private");
-        this.report.append("Публичный ключ: ").append(this.publicKey).append("\n");
-        this.report.append("Приватный ключ: ").append(this.privateKey).append("\n");
+        this.report.append("Пара (e,n) составляет публичный ключ\nПубличный ключ: ").append(this.publicKey).append("\n");
+        this.report.append("Пара (d,n) составляет приватный ключ\nПриватный ключ: ").append(this.privateKey).append("\n");
         Long encryptedMessage = encryptMessage();
         this.report.append("Зашифрованное сообщение: ").append(encryptedMessage).append("\n");
         Long decryptedMessage = decryptMessage(encryptedMessage);
@@ -42,16 +42,29 @@ public class RSA {
     }
 
     private Boolean checkSign(Long signedMessage){
+        this.report.append("""
+                Подпись провереятся по формуле: m' =  modulo(s,e,n)
+                Где m - сообщение, m' - прообраз сообщения из подписи, {m,s} - пара сообщение и подпись, (e,n) - публичный ключ
+                Если m' = m то подпись верна
+                """);
         long modulo = modulo(signedMessage, this.publicKey.get(0).longValue(), this.publicKey.get(1).longValue());
         this.report.append("Значение сообщения с подписью: ").append(signedMessage)
                 .append(" равна: ").append(modulo).append("\n");
         return this.message.equals(modulo);
     }
     private Long signMessage() {
+        this.report.append("""
+                Сообщение подписывается с помощью секретного ключа по формуле: modulo(m,d,n)
+                Где m - сообщение, (d,n) - приватный ключ
+                """);
         return modulo(this.message,this.privateKey.get(0).longValue(),this.privateKey.get(1).longValue());
     }
 
     private Long decryptMessage(long encryptedMessage) {
+        this.report.append("""
+                Сообщение разшифровывается с помощью сеансового ключа симметричным алгоритмом: modulo(с,d,n)
+                Где c - сообщение для разшифровывания, (d,n) - приватный ключ
+                """);
         return modulo(encryptedMessage,this.privateKey.get(0).longValue(),this.privateKey.get(1).longValue());
     }
 
@@ -59,10 +72,19 @@ public class RSA {
         Map<String, List<BigInteger>> result = new HashMap<>();
         long p = randomPrime(minValueForGeneration, maxValueForGeneration);
         long q = randomPrime(minValueForGeneration, maxValueForGeneration);
+        this.report.append("Выбираются два случайных простых числа p = ").append(p).append(" и q = ")
+                .append(q).append("\n");
         BigInteger n = BigInteger.valueOf(p * q);
+        this.report.append("Вычисляется выражение n = p * q = ").append(n).append("\n");
         BigInteger eulerFunction = BigInteger.valueOf((p - 1) * (q - 1));
+        this.report.append("Вычисляется значение вункции Эйлера от числа n f(n): (p - 1) * (q - 1) = ")
+                .append(eulerFunction).append("\n");
         BigInteger openExponent = getOpenExponent(eulerFunction);
+        this.report.append("Выбирается целое числсло e: 1 < e <  f(n) взаимнопростое со значением f(n) = ")
+                .append(openExponent).append("\n");
         long d = modularMultiplicativeInverse(openExponent.longValue(),eulerFunction.longValue());
+        this.report.append("Вычисляетс ямультипликативное число d к числу e по модулю f(n) = ")
+                .append(d).append("\n");
         List<BigInteger> list = List.of(openExponent, n, BigInteger.valueOf(d), n);
         result.put("public",list.subList(0,2));
         result.put("private",list.subList(2,4));
@@ -74,7 +96,7 @@ public class RSA {
     private BigInteger getOpenExponent(BigInteger eulerFunction) {
         List<BigInteger> primeArray = new ArrayList<>();
         int count = 0;
-        BigInteger prime = nextPrime(4);;
+        BigInteger prime = nextPrime(4);
         while (count < 20) {
             prime = nextPrime(prime.longValue());
             if (prime.compareTo(eulerFunction) > 0) {
@@ -88,11 +110,10 @@ public class RSA {
     }
 
     private Long encryptMessage(){
+        this.report.append("""
+                Сообщение шифруется с помощью сеансового ключа симметричным алгоритмом: modulo(m,e,n)
+                Где m - сообщение для шифрования, (e,n) - публичный ключ
+                """);
         return modulo(this.message,this.publicKey.get(0).longValue(),this.publicKey.get(1).longValue());
-    }
-
-
-    public List<BigInteger> getPublicKey() {
-        return publicKey;
     }
 }

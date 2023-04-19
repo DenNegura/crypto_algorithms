@@ -47,11 +47,11 @@ public class RSA {
     }
 
     private Boolean checkSign(Long signedMessage) {
-        this.report.append("""
-                Подпись провереятся по формуле: m' = s ^ e mod n
-                Где m - сообщение, m' - прообраз сообщения из подписи, {m,s} - пара сообщение и подпись, (e,n) - публичный ключ
-                Если m' = m то подпись верна
-                """);
+        this.report.append(
+                "Подпись провереятся по формуле: m' = s ^ e mod n\n" +
+                        "Где m - сообщение, m' - прообраз сообщения из подписи, {m,s} - пара сообщение и подпись, (e,n) - публичный ключ\n" +
+                        "Если m' = m то подпись верна\n"
+        );
         long modulo = modulo(signedMessage, this.publicKey.get(0).longValue(), this.publicKey.get(1).longValue());
         this.report.append("Значение сообщения с подписью: ").append(signedMessage)
                 .append(" равна: ").append(modulo).append("\n");
@@ -59,18 +59,18 @@ public class RSA {
     }
 
     private Long signMessage() {
-        this.report.append("""
-                Сообщение подписывается с помощью секретного ключа по формуле: m ^ e mod n
-                Где m - сообщение, (d,n) - приватный ключ
-                """);
+        this.report.append(
+                "Сообщение подписывается с помощью секретного ключа по формуле: m ^ e mod n\n" +
+                        "Где m - сообщение, (d,n) - приватный ключ\n"
+        );
         return modulo(this.message, this.privateKey.get(0).longValue(), this.privateKey.get(1).longValue());
     }
 
     private Long decryptMessage(long encryptedMessage) {
-        this.report.append("""
-                Сообщение разшифровывается с помощью сеансового ключа симметричным алгоритмом: c ^ d mod n
-                Где c - сообщение для разшифровывания, (d,n) - приватный ключ
-                """);
+        this.report.append(
+                "Сообщение разшифровывается с помощью сеансового ключа симметричным алгоритмом: c ^ d mod n\n" +
+                        "Где c - сообщение для разшифровывания, (d,n) - приватный ключ\n"
+        );
         return modulo(encryptedMessage, this.privateKey.get(0).longValue(), this.privateKey.get(1).longValue());
     }
 
@@ -115,10 +115,10 @@ public class RSA {
     }
 
     private Long encryptMessage() {
-        this.report.append("""
-                Сообщение шифруется с помощью сеансового ключа симметричным алгоритмом: m ^ e mod n
-                Где m - сообщение для шифрования, (e,n) - публичный ключ
-                """);
+        this.report.append(
+                "Сообщение шифруется с помощью сеансового ключа симметричным алгоритмом: m ^ e mod n\n" +
+                        "Где m - сообщение для шифрования, (e,n) - публичный ключ\n"
+        );
         return modulo(this.message, this.publicKey.get(0).longValue(), this.publicKey.get(1).longValue());
     }
 }
